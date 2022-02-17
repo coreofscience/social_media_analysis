@@ -1,0 +1,352 @@
+---
+title: "Informe No 17"
+output: html_notebook
+---
+Manizales 12 de febrero de 2022
+
+Referencia: Informe  del 8 al 11 de febrero
+
+# Creating the environment 
+
+```{r}
+library(googlesheets4)
+library(tidyverse)
+library(ggpubr)
+library(gpairs)
+library(PerformanceAnalytics)
+library(lubridate)
+```
+
+# Getting data 
+
+```{r}
+facebook <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1112529965")
+youtube <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1622987274")
+facebook[is.na(facebook)] <- 0
+
+#twitter <- read_sheet("https://docs.google.com/spreadsheets/d/1kM1IZfCGWZ8k-jFlx4Ak-OIEp-3MVRdCpvV00DXmNiI/edit#gid=1214992278", sheet = "twitter")
+```
+
+
+##  Facebook Data analysis
+
+# Global Analysis
+
+```{r}
+total_likes <- 
+  facebook %>% 
+  select(Date, Lifetime_Total_Likes) %>% 
+  ggplot(aes(x = Date, y = Lifetime_Total_Likes)) +
+  geom_line() +
+  ggtitle("Total likes acummulated per day") +
+  ylab("Total likes")
+
+total_engagement <- 
+  facebook %>% 
+  select(Date, Weekly_Page_Engaged_Users) %>% 
+  ggplot(aes(x = Date, y = Weekly_Page_Engaged_Users)) +
+  geom_line() +
+  ggtitle("Total engaged acummulated per day") +
+  ylab("Total engaged")
+
+total_reach <- 
+  facebook %>% 
+  select(Date, Weekly_Total_Reach ) %>% 
+  ggplot(aes(x = Date, y = Weekly_Total_Reach)) +
+  geom_line() +
+  ggtitle("Total reach acummulated per day") +
+  ylab("Total reach")
+
+total_impresions <-
+  facebook %>% 
+  select(Date, Weekly_Total_Impressions) %>% 
+  ggplot(aes(x = Date, y = Weekly_Total_Impressions)) +
+  geom_line() +
+  ggtitle("Total impressions acummulated per day") +
+  ylab("Total Impressions")
+
+global_analysis <- 
+  ggarrange(total_likes, 
+            total_engagement, 
+            total_reach,
+            total_impresions,
+            labels = c("A", "B", "C", "D"),
+            ncol = 2, nrow = 2)
+global_analysis
+
+```
+
+
+
+### Global Analysis 2
+
+```{r}
+total_daily_likes <- 
+  facebook %>% 
+  select(Date, Daily_New_Likes) %>% 
+  ggplot(aes(x = Date, y = Daily_New_Likes)) +
+  geom_line() +
+  ggtitle("Daily New Likes") +
+  ylab("Total daily likes")
+
+total_daily_engagement <- 
+  facebook %>% 
+  select(Date, Daily_Page_Engaged_Users) %>% 
+  ggplot(aes(x = Date, y = Daily_Page_Engaged_Users )) +
+  geom_line() +
+  ggtitle("Daily new engaged ") +
+  ylab("Total daily engaged")
+
+total_daily_reach <- 
+  facebook %>% 
+  select(Date, Daily_Total_Reach) %>% 
+  ggplot(aes(x = Date, y = Daily_Total_Reach)) +
+  geom_line() +
+  ggtitle("Daily new reach") +
+  ylab("Total daily reach")
+
+total_daily_impresions <-
+  facebook %>% 
+  select(Date, Daily_Total_Impressions) %>% 
+  ggplot(aes(x = Date, y = Daily_Total_Impressions)) +
+  geom_line() +
+  ggtitle("Daily New Impressions") +
+  ylab("Total daily Impressions")
+
+global_analysis <- 
+  ggarrange(total_daily_likes, 
+            total_daily_engagement, 
+            total_daily_reach,
+            total_daily_impresions,
+            labels = c("A", "B", "C", "D"),
+            ncol = 2, nrow = 2)
+global_analysis
+
+```
+
+
+
+# Past week
+
+```{r}
+facebook_week <- 
+  facebook %>% 
+  filter(Date >= "2020-11-16") %>% 
+  mutate(Date = lubridate::wday(Date, label = TRUE))
+```
+
+
+```{r}
+total_daily_likes_week <- 
+  facebook_week %>% 
+  select(Date, Daily_New_Likes) %>% 
+  ggplot(aes(x = Date, y = Daily_New_Likes, group = 1)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Daily New Likes") +
+  ylab("Total daily likes")
+
+total_daily_engagement_week <- 
+  facebook_week %>% 
+  select(Date, Daily_Page_Engaged_Users) %>% 
+  ggplot(aes(x = Date, y = Daily_Page_Engaged_Users, group = 1 )) +
+  geom_line() +
+  ggtitle("Daily new engaged ") +
+  ylab("Total daily engaged")
+
+total_daily_reach_week <- 
+  facebook_week %>% 
+  select(Date, Daily_Total_Reach) %>% 
+  ggplot(aes(x = Date, y = Daily_Total_Reach, group = 1)) +
+  geom_line() +
+  ggtitle("Daily new reach") +
+  ylab("Total daily reach")
+
+total_daily_impresions_week <-
+  facebook_week %>% 
+  select(Date, Daily_Total_Impressions) %>% 
+  ggplot(aes(x = Date, y = Daily_Total_Impressions, group = 1)) +
+  geom_line() +
+  ggtitle("Daily New Impressions") +
+  ylab("Total daily Impressions")
+
+global_analysis_week <- 
+  ggarrange(total_daily_likes_week, 
+            total_daily_engagement_week, 
+            total_daily_reach_week,
+            total_daily_impresions_week,
+            labels = c("A", "B", "C", "D"),
+            ncol = 2, nrow = 2)
+global_analysis_week
+```
+1.Cómo usar ToS con un archivo de Web of Science (txt)
+
+Los likes de la página varían durante la semana, obteniendo el día domingo uno, el jueves dos likes y el sábado uno más, 3 likes totales durante la semana. Se puede observar que en las interacciones hay gran movimiento el día jueves que fue justamente el día en que se realizó la publicación, así mismo fue disminuyendo gradualmente hasta el sábado. La publicación alcanzo aproximadamente a 47 personas durante el día de la publicación, así mismo las impresiones alcanzaron un rango de 155 personas aproximadamente. 
+
+ 
+# Estadística inferencial
+
+Vamos a normalizar los datos para que se ajusten más a una distribución normal. 
+
+```{r}
+facebook <- 
+  facebook %>% 
+  mutate(Daily_New_Likes_log = log(Daily_New_Likes + 1),
+         Daily_Page_Engaged_Users_log = log(Daily_Page_Engaged_Users + 1),
+         Daily_Total_Reach_log = log(Daily_Total_Reach +1),
+         Daily_Total_Impressions_log = log(Daily_Total_Impressions + 1))
+```
+
+Chequeo la distribución de las nuevas variables
+
+```{r}
+PerformanceAnalytics::chart.Correlation(facebook %>% 
+                                          select(Daily_New_Likes_log,
+                                          Daily_Page_Engaged_Users_log,
+                                          Daily_Total_Reach_log,
+                                          Daily_Total_Impressions_log))
+
+```
+Una vez transformados los datos, realizamos lo modelos de regresión lineal 
+
+
+```{r}
+model_1 <- lm(Daily_New_Likes_log ~ Daily_Page_Engaged_Users_log, 
+              data = facebook)
+```
+
+```{r}
+summary(model_1)
+```
+Muestra un P valor que es muy significativo y un valor r que no es tan bueno, es decir, esta relación entre los likes de la página y las interacciones no tiene mucha correlación, esto indica que aproximadamente la mitad de las personas que le dan like a la página, interactúan con ella y la mitad no lo hace, esta relación no ayuda para ningún tipo de decisión que se deba tomar.
+
+
+```{r}
+model_2 <- lm(Daily_New_Likes_log ~ Daily_Total_Reach_log, 
+              data = facebook)
+```
+
+
+```{r}
+summary(model_2)
+```
+Este es quizás la correlación más baja pues muestra un P valor que no es significativo y un r que no es negativo, pero que tampoco es proporcional, esto indica que los likes que se generan en la página no influyen en nada en los alcances de las publicaciones, esto se puede deducir debido a que las personas que dan like a la página pocas veces o ninguna, les aparece alguna publicación en sus inicios o feeds. Esta correlación se descarta para algún tipo de toma de decisiones
+
+
+
+
+```{r}
+model_3 <- lm(Daily_New_Likes_log ~ Daily_Total_Impressions_log, 
+              data = facebook)
+```
+
+
+```{r}
+summary(model_3)
+```
+El P valor arroja un resultado significativo y el r está en un rango medio, pero la correlación entre los likes diarios y las impresiones, no son muy altas, si bien es cierto que el número impresiones puede ser un detonante para que la pagina pueda crecer en el tema de like, no necesariamente será así siempre.
+
+
+```{r}
+model_4 <- lm(Daily_Page_Engaged_Users_log ~ Daily_Total_Reach_log , 
+              data = facebook)
+```
+
+
+```{r}
+summary(model_4)
+```
+El P valor es altamente significativo y el r cuadrado está llegando a un rango bueno, la correlación que existe entre las interacciones con las publicaciones y los alcances es alto, pues si un usuario interactúo con la publicación quiere decir que se logró ese alcance. 
+
+
+
+```{r}
+model_5 <- lm(Daily_Page_Engaged_Users_log ~  Daily_Total_Impressions_log , 
+              data = facebook)
+```
+
+
+```{r}
+summary(model_5)
+```
+El P valor es muy significativo, lo que significa que las impresiones de las publicaciones tienen alta proporcionalidad, esto nos indica que generalmente las personas que interactúan con una publicación o video, generan una impresión, esto porque la imagen que es explorada más de una vez genera cierta atracción por el usuario, seguido a esto el usuario comenta, o le da like a la publicación la cual fue de su interés.
+
+
+
+```{r}
+model_6 <- lm(Daily_Total_Reach_log ~  Daily_Total_Impressions_log , 
+              data = facebook)
+```
+
+
+```{r}
+summary(model_6)
+```
+Esta es la correlación más alta, hay una relación casi directa entre estas dos variables, pues se observa un R con una proporcionalidad alta y un P valor muy significativo, esto quiere decir que la mayoría de usuarios cuando les parece una publicación de Core of Science les interesa su contenido y abren la publicación para observarla, este indicador puede indicar que los usuarios tienen un gran interés por el contenido d la página.
+
+
+
+
+```{r}
+plot(model_1)
+```
+# Twitter
+
+```{r}
+twitter %>% 
+  select(Date,Impressions_Tw) %>% 
+  ggplot(aes(x = Date, y = Impressions_Tw)) +
+  geom_line() +
+  ggtitle("Total Impressions twitter ") +
+  ylab("Total Impressions")
+  
+```
+
+```{r}
+twitter_week <- 
+  twitter %>% 
+  filter(Date >= "2020-11-16" & Date < "2020-11-23") %>% 
+  mutate(Date = lubridate::wday(Date, label = TRUE)) 
+```
+
+```{r}
+Impressions_tw_week <- 
+  twitter_week %>% 
+  select(Date, Impressions_Tw) %>% 
+  ggplot(aes(x = Date, y = Impressions_Tw, group = 1)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Daily New Impressions") +
+  ylab("Total daily Impressions")
+
+Impressions_tw_week
+
+```
+
+
+
+##  YouTube Data analysis
+
+
+```{r}
+table_data <- read_sheet("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/edit#gid=1622987274", sheet = "Table data")
+
+chart_data <- read_sheet("https://docs.google.com/spreadsheets/d/17eqGaU2VtBkbn1kMFa_YgvUosW-1XR9M-oztZZcUmTc/edit#gid=1209667660", sheet = "Chart data")
+
+totals <- read_sheet("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/edit#gid=1622987274", sheet = "Totals")
+```
+4/1AX4XfWiwUijq9sdSf71im5MXLb90ZebZPuKHHcrwfDSxPuG9MwbN64J2gbU
+
+```{r}
+totals %>% 
+  select(Date, Views_Y) %>% 
+  ggplot(aes(x = Date, y = Views_Y, group = 1)) +
+  geom_line() +
+  ggtitle("Total views per day ") +
+  ylab("Total Views")
+  
+```
+
+
+
+
