@@ -8,21 +8,29 @@ Referencia: Informe  del 8 al 11 de febrero
 
 # Creating the environment 
 
-```{r}
+
+```{r message=FALSE, warning=FALSE}
+
 library(googlesheets4)
 library(tidyverse)
 library(ggpubr)
 library(gpairs)
 library(PerformanceAnalytics)
 library(lubridate)
+library(ggplot2)
+library(readr)
+library(readxl)
 ```
 
 # Getting data 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 facebook <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1112529965")
+
 youtube <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1622987274")
+
 facebook[is.na(facebook)] <- 0
+linkedind <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=712028608")
 
 #twitter <- read_sheet("https://docs.google.com/spreadsheets/d/1kM1IZfCGWZ8k-jFlx4Ak-OIEp-3MVRdCpvV00DXmNiI/edit#gid=1214992278", sheet = "twitter")
 ```
@@ -327,24 +335,211 @@ Impressions_tw_week
 
 ##  YouTube Data analysis
 
-
 ```{r}
-table_data <- read_sheet("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/edit#gid=1622987274", sheet = "Table data")
+total_views <-
+  youtube %>% 
+  select(Date, Views)
 
-chart_data <- read_sheet("https://docs.google.com/spreadsheets/d/17eqGaU2VtBkbn1kMFa_YgvUosW-1XR9M-oztZZcUmTc/edit#gid=1209667660", sheet = "Chart data")
-
-totals <- read_sheet("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/edit#gid=1622987274", sheet = "Totals")
 ```
-4/1AX4XfWiwUijq9sdSf71im5MXLb90ZebZPuKHHcrwfDSxPuG9MwbN64J2gbU
 
 ```{r}
-totals %>% 
-  select(Date, Views_Y) %>% 
-  ggplot(aes(x = Date, y = Views_Y, group = 1)) +
-  geom_line() +
-  ggtitle("Total views per day ") +
-  ylab("Total Views")
+ggplot(total_views) +
+  geom_line(aes(x=Date, y=Views)) +
+  ggtitle("Views") +
+  ylab("total Views")
+    
+    
+    
   
+```
+
+```{r}
+total_Subscribers <-
+  youtube %>% 
+  select(Date, Subscribers)
+```
+  
+```{r}
+ggplot(total_Subscribers) +
+  geom_line(aes(x=Date, y=Subscribers)) +
+  ggtitle("Subscribers") +
+  ylab("total_Subscribers")
+```
+
+```{r}
+total_Playlist_starts <-
+  youtube %>% 
+  select(Date, playlist_starts)
+  
+```
+
+```{r}
+ggplot(total_Playlist_starts) +
+  geom_line(aes(x=Date, y=playlist_starts)) +
+  ggtitle("playlist starts") +
+  ylab("total playlist starts")
+
+```
+
+```{r}
+total_impressions <-
+  youtube %>% 
+  select(Date, impressions)
+  
+```
+
+```{r}
+ggplot(total_impressions) +
+  geom_line(aes(x=Date, y=impressions)) +
+  ggtitle("impresions") +
+  ylab("total impresions")
+
+```
+
+
+
+
+
+
+#linkedind data analysis
+
+
+```{r}
+total_view <-
+  linkedind %>% 
+  select(date, Overall_page_views_total)
+
+  
+```
+
+```{r}
+ggplot(total_view) +
+  geom_point(aes(x=date, y=Overall_page_views_total)) +
+  ggtitle("Overal page views total") +
+  ylab("total view")
+```
+
+```{r}
+total_visitors <-
+  linkedind %>% 
+  select(date, Overall_page_unique_visitors_total) 
+ggplot(total_visitors) +
+  geom_point(aes(x=date, y=Overall_page_unique_visitors_total))+
+  ggtitle("Overall page unique visitors total") +
+  ylab("total visitors")
+
+
+```
+```{r}
+page_views <-
+  linkedind %>% 
+  select(date, Total_Page_Views_Total)
+  
+```
+
+```{r}
+ggplot(page_views) +
+  geom_point(aes(x=date, y=Total_Page_Views_Total)) +
+  ggtitle("Total Page Views Total") +
+  ylab("page views")
+```
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+
+  
+  
+ 
+
+  
+
+  
+  
+  
+  
+
+  
+
+
+  
+
+
+
+
+ 
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+  
+  
+
+
+
+       
+
+         
+
+  
+
+                     
+
+        
+         
+
+
+
+  
+           
+
 ```
 
 
