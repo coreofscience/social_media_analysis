@@ -38,7 +38,6 @@ linkedind <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_k
 
 ##  Facebook Data analysis
 
-# Global Analysis
 
 ```{r}
 total_likes <- 
@@ -56,29 +55,60 @@ ggplot(total_likes)+
   
 ```
 
-
-
-
-```{}
-ggplot(aes(x = Date, y = Lifetime_Total_Likes)) +
-  geom_line() +
-  ggtitle("Total likes acummulated per day") +
-  ylab("Total likes")
+```{r}
+total_engagement <- 
+  facebook %>% 
+  select(Date, Weekly_Page_Engaged_Users)  
+  
 ```
 
+```{r}
+ggplot(total_engagement) +
+  geom_point(aes(x=Date, y=Weekly_Page_Engaged_Users)) +
+  ggtitle("Total engaged acummulated per day") +
+  ylab("Total engaged")
+
+```
+
+```{r}
+total_reach <- 
+  facebook %>% 
+  select(Date, Weekly_Total_Reach ) 
+  
+```
+
+```{r}
+ggplot(total_reach) +
+  geom_point(aes(Date, y=Weekly_Total_Reach)) +
+  ggtitle("Total reach acummulated per day") +
+  ylab("Total reach")
+```
+
+```{r}
+total_impresions <-
+  facebook %>% 
+  select(Date, Weekly_Total_Impressions) 
+  
+```
+
+```{r}
+ggplot(total_impresions) +
+  geom_point(aes(x=Date, y=Weekly_Total_Impressions)) +
+  ggtitle("Total impressions acummulated per day") +
+  ylab("Total Impressions")
+```
+
+###  Facebook Data analysis
+
+# Global Analysis 1
 
 
-
-
-
-
-
-```{}
+```{r}
 total_likes <- 
   facebook %>% 
   select(Date, Lifetime_Total_Likes) %>% 
   ggplot(aes(x = Date, y = Lifetime_Total_Likes)) +
-  geom_line() +
+  geom_point() +
   ggtitle("Total likes acummulated per day") +
   ylab("Total likes")
 
@@ -88,7 +118,7 @@ total_engagement <-
   facebook %>% 
   select(Date, Weekly_Page_Engaged_Users) %>% 
   ggplot(aes(x = Date, y = Weekly_Page_Engaged_Users)) +
-  geom_line() +
+  geom_point() +
   ggtitle("Total engaged acummulated per day") +
   ylab("Total engaged")
 
@@ -96,7 +126,7 @@ total_reach <-
   facebook %>% 
   select(Date, Weekly_Total_Reach ) %>% 
   ggplot(aes(x = Date, y = Weekly_Total_Reach)) +
-  geom_line() +
+  geom_point() +
   ggtitle("Total reach acummulated per day") +
   ylab("Total reach")
 
@@ -104,7 +134,7 @@ total_impresions <-
   facebook %>% 
   select(Date, Weekly_Total_Impressions) %>% 
   ggplot(aes(x = Date, y = Weekly_Total_Impressions)) +
-  geom_line() +
+  geom_point() +
   ggtitle("Total impressions acummulated per day") +
   ylab("Total Impressions")
 
@@ -121,6 +151,7 @@ global_analysis
 
 
 
+
 ### Global Analysis 2
 
 ```{r}
@@ -128,7 +159,7 @@ total_daily_likes <-
   facebook %>% 
   select(Date, Daily_New_Likes) %>% 
   ggplot(aes(x = Date, y = Daily_New_Likes)) +
-  geom_line() +
+  geom_point() +
   ggtitle("Daily New Likes") +
   ylab("Total daily likes")
 
@@ -136,7 +167,7 @@ total_daily_engagement <-
   facebook %>% 
   select(Date, Daily_Page_Engaged_Users) %>% 
   ggplot(aes(x = Date, y = Daily_Page_Engaged_Users )) +
-  geom_line() +
+  geom_point() +
   ggtitle("Daily new engaged ") +
   ylab("Total daily engaged")
 
@@ -144,7 +175,7 @@ total_daily_reach <-
   facebook %>% 
   select(Date, Daily_Total_Reach) %>% 
   ggplot(aes(x = Date, y = Daily_Total_Reach)) +
-  geom_line() +
+  geom_point() +
   ggtitle("Daily new reach") +
   ylab("Total daily reach")
 
@@ -152,7 +183,7 @@ total_daily_impresions <-
   facebook %>% 
   select(Date, Daily_Total_Impressions) %>% 
   ggplot(aes(x = Date, y = Daily_Total_Impressions)) +
-  geom_line() +
+  geom_point() +
   ggtitle("Daily New Impressions") +
   ylab("Total daily Impressions")
 
