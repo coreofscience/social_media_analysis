@@ -108,7 +108,7 @@ total_likes <-
   facebook %>% 
   select(Date, Lifetime_Total_Likes) %>% 
   ggplot(aes(x = Date, y = Lifetime_Total_Likes)) +
-  geom_point() +
+  geom_line() +
   ggtitle("Total likes acummulated per day") +
   ylab("Total likes")
 
