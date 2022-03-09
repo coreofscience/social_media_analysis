@@ -43,11 +43,46 @@ linkedind <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_k
 ```{r}
 total_likes <- 
   facebook %>% 
+  select(Date, Lifetime_Total_Likes) 
+  
+```
+
+```{r}
+ggplot(total_likes)+
+  geom_point(aes(x=Date, y=Lifetime_Total_Likes)) +
+  ggtitle("Total likes acummulated per day") +
+  ylab("Total likes")
+  
+  
+```
+
+
+
+
+```{}
+ggplot(aes(x = Date, y = Lifetime_Total_Likes)) +
+  geom_line() +
+  ggtitle("Total likes acummulated per day") +
+  ylab("Total likes")
+```
+
+
+
+
+
+
+
+
+```{}
+total_likes <- 
+  facebook %>% 
   select(Date, Lifetime_Total_Likes) %>% 
   ggplot(aes(x = Date, y = Lifetime_Total_Likes)) +
   geom_line() +
   ggtitle("Total likes acummulated per day") +
   ylab("Total likes")
+
+
 
 total_engagement <- 
   facebook %>% 
