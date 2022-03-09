@@ -1,6 +1,8 @@
 ---
 title: "Informe No 17"
 output: html_notebook
+editor_options: 
+  chunk_output_type: console
 ---
 Manizales 12 de febrero de 2022
 
@@ -9,7 +11,7 @@ Referencia: Informe  del 8 al 11 de febrero
 # Creating the environment 
 
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, echo = FALSE}
 
 library(googlesheets4)
 library(tidyverse)
@@ -25,7 +27,8 @@ library(readxl)
 # Getting data 
 
 ```{r message=FALSE, warning=FALSE}
-facebook <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1112529965")
+facebook <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1112529965") |> 
+  mutate(Date = mdy(Date))
 
 youtube <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1622987274")
 
@@ -109,6 +112,7 @@ total_likes <-
   select(Date, Lifetime_Total_Likes) %>% 
   ggplot(aes(x = Date, y = Lifetime_Total_Likes)) +
   geom_line() +
+  geom_point() +
   ggtitle("Total likes acummulated per day") +
   ylab("Total likes")
 
