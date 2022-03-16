@@ -145,7 +145,7 @@ global_analysis
 ```
 
 
-## Global Analysis 2
+## Global Analysis 
 
 ```{r}
 total_daily_likes <- 
