@@ -1,12 +1,14 @@
 ---
 title: "Informe No 17"
-output: html_notebook
-editor_options: 
-  chunk_output_type: console
+output:
+  html_notebook: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
 ---
-Manizales 12 de febrero de 2022
+Manizales 16 de marzo de 2022
 
-Referencia: Informe  del 8 al 11 de febrero
+Referencia: Informe  del 9 al 16 de marzo
 
 # Creating the environment 
 
@@ -31,9 +33,11 @@ facebook <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kL
   mutate(Date = mdy(Date))
 
 youtube <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1622987274")
-
+  
 facebook[is.na(facebook)] <- 0
-linkedind <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=712028608")
+linkedind <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=712028608") |>
+   mutate(date = mdy(date))
+
 
 #twitter <- read_sheet("https://docs.google.com/spreadsheets/d/1kM1IZfCGWZ8k-jFlx4Ak-OIEp-3MVRdCpvV00DXmNiI/edit#gid=1214992278", sheet = "twitter")
 ```
@@ -122,6 +126,7 @@ total_engagement <-
   facebook %>% 
   select(Date, Weekly_Page_Engaged_Users) %>% 
   ggplot(aes(x = Date, y = Weekly_Page_Engaged_Users)) +
+  geom_line() +
   geom_point() +
   ggtitle("Total engaged acummulated per day") +
   ylab("Total engaged")
@@ -130,6 +135,7 @@ total_reach <-
   facebook %>% 
   select(Date, Weekly_Total_Reach ) %>% 
   ggplot(aes(x = Date, y = Weekly_Total_Reach)) +
+  geom_line() +
   geom_point() +
   ggtitle("Total reach acummulated per day") +
   ylab("Total reach")
@@ -138,6 +144,7 @@ total_impresions <-
   facebook %>% 
   select(Date, Weekly_Total_Impressions) %>% 
   ggplot(aes(x = Date, y = Weekly_Total_Impressions)) +
+  geom_line() +
   geom_point() +
   ggtitle("Total impressions acummulated per day") +
   ylab("Total Impressions")
@@ -163,6 +170,7 @@ total_daily_likes <-
   facebook %>% 
   select(Date, Daily_New_Likes) %>% 
   ggplot(aes(x = Date, y = Daily_New_Likes)) +
+  geom_line() +
   geom_point() +
   ggtitle("Daily New Likes") +
   ylab("Total daily likes")
@@ -171,6 +179,7 @@ total_daily_engagement <-
   facebook %>% 
   select(Date, Daily_Page_Engaged_Users) %>% 
   ggplot(aes(x = Date, y = Daily_Page_Engaged_Users )) +
+  geom_line() +
   geom_point() +
   ggtitle("Daily new engaged ") +
   ylab("Total daily engaged")
@@ -179,6 +188,7 @@ total_daily_reach <-
   facebook %>% 
   select(Date, Daily_Total_Reach) %>% 
   ggplot(aes(x = Date, y = Daily_Total_Reach)) +
+  geom_line() +
   geom_point() +
   ggtitle("Daily new reach") +
   ylab("Total daily reach")
@@ -187,6 +197,7 @@ total_daily_impresions <-
   facebook %>% 
   select(Date, Daily_Total_Impressions) %>% 
   ggplot(aes(x = Date, y = Daily_Total_Impressions)) +
+  geom_line() +
   geom_point() +
   ggtitle("Daily New Impressions") +
   ylab("Total daily Impressions")
@@ -209,7 +220,7 @@ global_analysis
 ```{r}
 facebook_week <- 
   facebook %>% 
-  filter(Date >= "2020-11-16") %>% 
+  filter(Date >= "2022-02-08") %>% 
   mutate(Date = lubridate::wday(Date, label = TRUE))
 ```
 
@@ -229,6 +240,7 @@ total_daily_engagement_week <-
   select(Date, Daily_Page_Engaged_Users) %>% 
   ggplot(aes(x = Date, y = Daily_Page_Engaged_Users, group = 1 )) +
   geom_line() +
+  geom_point() +
   ggtitle("Daily new engaged ") +
   ylab("Total daily engaged")
 
@@ -237,6 +249,7 @@ total_daily_reach_week <-
   select(Date, Daily_Total_Reach) %>% 
   ggplot(aes(x = Date, y = Daily_Total_Reach, group = 1)) +
   geom_line() +
+  geom_point() +
   ggtitle("Daily new reach") +
   ylab("Total daily reach")
 
@@ -245,6 +258,7 @@ total_daily_impresions_week <-
   select(Date, Daily_Total_Impressions) %>% 
   ggplot(aes(x = Date, y = Daily_Total_Impressions, group = 1)) +
   geom_line() +
+  geom_point() +
   ggtitle("Daily New Impressions") +
   ylab("Total daily Impressions")
 
@@ -402,6 +416,62 @@ Impressions_tw_week
 ```
 
 
+# Youtube Data Analysis
+# Global analysis
+
+```{r}
+total_views <-
+  youtube %>% 
+  select(Date, Views) +
+  ggplot(aes(x=Date, y=views)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("views") +
+  ylab("total views")
+
+total_Subscribers <-
+  youtube %>% 
+  select(Date, Subscribers) +
+  ggplot(aes(Date, y=Subscribers)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Subscribers") +
+  ylab("total Subscribers")
+
+total_Playlist_starts <-
+  youtube %>% 
+  select(Date, playlist_starts) +
+  ggplot(aes(xDate, y=playlist_starts)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("playlist starts") +
+  ylab("total Playlist starts")
+
+total_impressions <-
+  youtube %>% 
+  select(Date, impressions) +
+  ggplot(aes(x=Date, y=impressions)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("impressions") +
+  ylab("total impressions")
+
+global_analysis <-
+  ggarrange(total_views,
+            total_Subscribers,
+            total_Playlist_starts,
+            total_impressions,
+            labels = c("A", "B", "C", "D"),
+            ncol = 2, nrow = 2)
+global_analysis
+
+
+
+
+  
+```
+
+
 
 ##  YouTube Data analysis
 
@@ -409,14 +479,19 @@ Impressions_tw_week
 total_views <-
   youtube %>% 
   select(Date, Views)
+  
+
 
 ```
 
 ```{r}
 ggplot(total_views) +
   geom_line(aes(x=Date, y=Views)) +
+  geom_point(aes(x=Date, y=Views)) +
   ggtitle("Views") +
-  ylab("total Views")
+  ylab("total Views") 
+
+
     
     
     
@@ -432,20 +507,22 @@ total_Subscribers <-
 ```{r}
 ggplot(total_Subscribers) +
   geom_line(aes(x=Date, y=Subscribers)) +
+  geom_point(aes(x=Date, y=Subscribers)) +
   ggtitle("Subscribers") +
   ylab("total_Subscribers")
 ```
 
 ```{r}
-total_Playlist_starts <-
+total_impressions <-
   youtube %>% 
-  select(Date, playlist_starts)
+  select(Date, impressions)
   
 ```
 
 ```{r}
-ggplot(total_Playlist_starts) +
+ggplot(total_impressions) +
   geom_line(aes(x=Date, y=playlist_starts)) +
+  geom_point(aes(x=Date, y=playlist_starts)) +
   ggtitle("playlist starts") +
   ylab("total playlist starts")
 
@@ -461,6 +538,7 @@ total_impressions <-
 ```{r}
 ggplot(total_impressions) +
   geom_line(aes(x=Date, y=impressions)) +
+  geom_point(aes(x=Date, y=impressions)) +
   ggtitle("impresions") +
   ylab("total impresions")
 
@@ -485,6 +563,7 @@ total_view <-
 ```{r}
 ggplot(total_view) +
   geom_point(aes(x=date, y=Overall_page_views_total)) +
+  geom_line(aes(x=date, y=Overall_page_views_total)) +
   ggtitle("Overal page views total") +
   ylab("total view")
 ```
@@ -495,21 +574,26 @@ total_visitors <-
   select(date, Overall_page_unique_visitors_total) 
 ggplot(total_visitors) +
   geom_point(aes(x=date, y=Overall_page_unique_visitors_total))+
+  geom_line(aes(x=date, y=Overall_page_unique_visitors_total)) +
   ggtitle("Overall page unique visitors total") +
   ylab("total visitors")
 
 
 ```
+
+
 ```{r}
 page_views <-
   linkedind %>% 
-  select(date, Total_Page_Views_Total)
+  select(date, Total_Page_Views_Total) +
+  
   
 ```
 
 ```{r}
 ggplot(page_views) +
   geom_point(aes(x=date, y=Total_Page_Views_Total)) +
+  geom_line(aes(x=date, y=Total_Page_Views_Total)) +
   ggtitle("Total Page Views Total") +
   ylab("page views")
 ```
