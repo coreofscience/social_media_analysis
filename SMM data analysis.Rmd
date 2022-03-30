@@ -24,6 +24,9 @@ library(lubridate)
 library(ggplot2)
 library(readr)
 library(readxl)
+library(googleAnalyticsR)
+
+
 ```
 
 Getting data 
@@ -265,15 +268,15 @@ ggplot(total_Subscribers) +
 ```
 
 ```{r}
-total_impressions <-
+total_likes <-
   youtube %>% 
-  select(Date, impressions)
+  select(Date, likes)
   
-ggplot(total_impressions) +
-  geom_line(aes(x=Date, y=impressions)) +
-  geom_point(aes(x=Date, y=impressions)) +
-  ggtitle("impresions") +
-  ylab("total impresions")
+ggplot(total_likes) +
+  geom_line(aes(x=Date, y=likes)) +
+  geom_point(aes(x=Date, y=likes)) +
+  ggtitle("likes") +
+  ylab("total likes")
 
 ```
 
@@ -288,6 +291,20 @@ ggplot(total_impressions) +
   ggtitle("impresions") +
   ylab("total impresions")
 
+```
+
+
+```{r}
+total_shares <-
+  youtube %>% 
+  select(Date, shares)
+  
+
+ggplot(total_shares) +
+  geom_line(aes(x=Date, y=shares)) +
+  geom_point(aes(x=Date, y=shares)) +
+  ggtitle("shares") +
+  ylab("total shares")
 ```
 
 # linkedind
@@ -329,6 +346,28 @@ ggplot(page_views) +
   ggtitle("Total Page Views Total") +
   ylab("page views")
 ```
+
+
+
+```{r}
+total_followers <-
+  linkedind %>% 
+  select(date, followers)
+  
+ggplot(total_followers) +
+  geom_point(aes(x=date, y=followers)) +
+  geom_line(aes(x=date, y=followers)) +
+  ggtitle("total followers") +
+  ylab("followers")
+
+```
+
+
+
+
+
+
+
 
 
 
