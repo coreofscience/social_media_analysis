@@ -10,10 +10,10 @@ editor_options:
 ---
 Manizales 16 de marzo de 2022
 
-Referencia: Informe  del 9 al 16 de marzo
+Referencia: Informe  del 16 al 22 de marzo
 
 
-```{r message=FALSE, warning=FALSE, echo = FALSE}
+```{r echo=, message=FALSE, warning=FALSE}
 
 library(googlesheets4)
 library(tidyverse)
@@ -24,6 +24,9 @@ library(lubridate)
 library(ggplot2)
 library(readr)
 library(readxl)
+library(googleAnalyticsR)
+
+
 ```
 
 Getting data 
@@ -43,54 +46,8 @@ facebook |> dim()
 ```
 
 
+
 # Facebook
-
-```{r}
-total_likes <- 
-  facebook %>% 
-  select(Date, Lifetime_Total_Likes) 
-
-ggplot(total_likes)+
-  geom_point(aes(x=Date, y=Lifetime_Total_Likes)) +
-  ggtitle("Total likes acummulated per day") +
-  ylab("Total likes")
-  
-  
-```
-
-```{r}
-total_engagement <- 
-  facebook %>% 
-  select(Date, Weekly_Page_Engaged_Users)  
-  
-ggplot(total_engagement) +
-  geom_point(aes(x=Date, y=Weekly_Page_Engaged_Users)) +
-  ggtitle("Total engaged acummulated per day") +
-  ylab("Total engaged")
-
-```
-
-```{r}
-total_reach <- 
-  facebook %>% 
-  select(Date, Weekly_Total_Reach ) 
-  
-ggplot(total_reach) +
-  geom_point(aes(Date, y=Weekly_Total_Reach)) +
-  ggtitle("Total reach acummulated per day") +
-  ylab("Total reach")
-```
-
-```{r}
-total_impresions <-
-  facebook %>% 
-  select(Date, Weekly_Total_Impressions) 
-  
-ggplot(total_impresions) +
-  geom_point(aes(x=Date, y=Weekly_Total_Impressions)) +
-  ggtitle("Total impressions acummulated per day") +
-  ylab("Total Impressions")
-```
 
 ## Global Analysis 1
 
@@ -199,9 +156,7 @@ global_analysis
 
 ## Past week
 
-1.Cómo usar ToS con un archivo de Web of Science (txt)
 
-Los likes de la página varían durante la semana, obteniendo el día domingo uno, el jueves dos likes y el sábado uno más, 3 likes totales durante la semana. Se puede observar que en las interacciones hay gran movimiento el día jueves que fue justamente el día en que se realizó la publicación, así mismo fue disminuyendo gradualmente hasta el sábado. La publicación alcanzo aproximadamente a 47 personas durante el día de la publicación, así mismo las impresiones alcanzaron un rango de 155 personas aproximadamente.
 
 ```{r}
 facebook_week <- 
@@ -287,55 +242,6 @@ Impressions_tw_week
 
 # Youtube 
 
-## Global analysis
-
-```{r}
-total_views <-
-  youtube %>% 
-  select(Date, Views) +
-  ggplot(aes(x=Date, y=views)) +
-  geom_line() +
-  geom_point() +
-  ggtitle("views") +
-  ylab("total views")
-
-total_Subscribers <-
-  youtube %>% 
-  select(Date, Subscribers) +
-  ggplot(aes(Date, y=Subscribers)) +
-  geom_line() +
-  geom_point() +
-  ggtitle("Subscribers") +
-  ylab("total Subscribers")
-
-total_Playlist_starts <-
-  youtube %>% 
-  select(Date, playlist_starts) +
-  ggplot(aes(xDate, y=playlist_starts)) +
-  geom_line() +
-  geom_point() +
-  ggtitle("playlist starts") +
-  ylab("total Playlist starts")
-
-total_impressions <-
-  youtube %>% 
-  select(Date, impressions) +
-  ggplot(aes(x=Date, y=impressions)) +
-  geom_line() +
-  geom_point() +
-  ggtitle("impressions") +
-  ylab("total impressions")
-
-global_analysis <-
-  ggarrange(total_views,
-            total_Subscribers,
-            total_Playlist_starts,
-            total_impressions,
-            labels = c("A", "B", "C", "D"),
-            ncol = 2, nrow = 2)
-global_analysis
-```
-
 
 ```{r}
 total_views <-
@@ -362,15 +268,15 @@ ggplot(total_Subscribers) +
 ```
 
 ```{r}
-total_impressions <-
+total_likes <-
   youtube %>% 
-  select(Date, impressions)
+  select(Date, likes)
   
-ggplot(total_impressions) +
-  geom_line(aes(x=Date, y=impressions)) +
-  geom_point(aes(x=Date, y=impressions)) +
-  ggtitle("playlist starts") +
-  ylab("total playlist starts")
+ggplot(total_likes) +
+  geom_line(aes(x=Date, y=likes)) +
+  geom_point(aes(x=Date, y=likes)) +
+  ggtitle("likes") +
+  ylab("total likes")
 
 ```
 
@@ -385,6 +291,20 @@ ggplot(total_impressions) +
   ggtitle("impresions") +
   ylab("total impresions")
 
+```
+
+
+```{r}
+total_shares <-
+  youtube %>% 
+  select(Date, shares)
+  
+
+ggplot(total_shares) +
+  geom_line(aes(x=Date, y=shares)) +
+  geom_point(aes(x=Date, y=shares)) +
+  ggtitle("shares") +
+  ylab("total shares")
 ```
 
 # linkedind
@@ -427,5 +347,27 @@ ggplot(page_views) +
   ylab("page views")
 ```
 
-# Google Analytics
+
+
+```{r}
+total_followers <-
+  linkedind %>% 
+  select(date, followers)
+  
+ggplot(total_followers) +
+  geom_point(aes(x=date, y=followers)) +
+  geom_line(aes(x=date, y=followers)) +
+  ggtitle("total followers") +
+  ylab("followers")
+
+```
+
+
+
+
+
+
+
+
+
 
