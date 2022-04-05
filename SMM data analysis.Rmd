@@ -1,5 +1,5 @@
 ---
-title: "Informe No 17"
+title: "Informe No 20"
 output:
   html_notebook: 
     toc: TRUE
@@ -7,10 +7,12 @@ output:
   pdf_document: default
 editor_options:
   chunk_output_type: inline
+
+  
 ---
 Manizales 16 de marzo de 2022
 
-Referencia: Informe  del 16 al 22 de marzo
+Referencia: Informe  del 23 al 30 de marzo
 
 
 ```{r echo=, message=FALSE, warning=FALSE}
@@ -25,6 +27,14 @@ library(ggplot2)
 library(readr)
 library(readxl)
 library(googleAnalyticsR)
+library(tosr)
+library(igraph)
+library(tidytext)
+library(colourpicker)
+library(colorspace)
+
+
+
 
 
 ```
@@ -43,6 +53,10 @@ linkedind <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_k
 
 facebook |> dim()
 #twitter <- read_sheet("https://docs.google.com/spreadsheets/d/1kM1IZfCGWZ8k-jFlx4Ak-OIEp-3MVRdCpvV00DXmNiI/edit#gid=1214992278", sheet = "twitter")
+
+google_analytics <- read_csv("https://docs.google.com/spreadsheets/d/1iv_7lBeondfTiLN_kLRnAW-9UnmT4lw6RVQxCuSD0vY/export?format=csv&gid=1575918127")
+  
+  
 ```
 
 
@@ -51,15 +65,17 @@ facebook |> dim()
 
 ## Global Analysis 1
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_likes <- 
   facebook %>% 
   select(Date, Lifetime_Total_Likes) %>% 
-  ggplot(aes(x = Date, y = Lifetime_Total_Likes)) +
+  ggplot(aes(x = Date, y = Lifetime_Total_Likes,)) +
   geom_line() +
   geom_point() +
   ggtitle("Total likes acummulated per day") +
   ylab("Total likes")
+
+
 
 
 
@@ -95,6 +111,7 @@ global_analysis <-
             total_engagement, 
             total_reach,
             total_impresions,
+      
             labels = c("A", "B", "C", "D"),
             ncol = 2, nrow = 2)
 global_analysis
@@ -104,7 +121,7 @@ global_analysis
 
 ## Global Analysis 2
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_daily_likes <- 
   facebook %>% 
   select(Date, Daily_New_Likes) %>% 
@@ -158,7 +175,7 @@ global_analysis
 
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 facebook_week <- 
   facebook %>% 
   filter(Date >= "2022-02-08") %>% 
@@ -243,7 +260,7 @@ Impressions_tw_week
 # Youtube 
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_views <-
   youtube %>% 
   select(Date, Views)
@@ -255,7 +272,7 @@ ggplot(total_views) +
   ylab("total Views") 
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_Subscribers <-
   youtube %>% 
   select(Date, Subscribers)
@@ -267,7 +284,7 @@ ggplot(total_Subscribers) +
   ylab("total_Subscribers")
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_likes <-
   youtube %>% 
   select(Date, likes)
@@ -280,7 +297,7 @@ ggplot(total_likes) +
 
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_impressions <-
   youtube %>% 
   select(Date, impressions)
@@ -294,7 +311,7 @@ ggplot(total_impressions) +
 ```
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_shares <-
   youtube %>% 
   select(Date, shares)
@@ -309,7 +326,7 @@ ggplot(total_shares) +
 
 # linkedind
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_view <-
   linkedind %>% 
   select(date, Overall_page_views_total)
@@ -321,7 +338,7 @@ ggplot(total_view) +
   ylab("total view")
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_visitors <-
   linkedind %>% 
   select(date, Overall_page_unique_visitors_total) 
@@ -335,7 +352,7 @@ ggplot(total_visitors) +
 ```
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 page_views <-
   linkedind %>% 
   select(date, Total_Page_Views_Total)
@@ -343,20 +360,20 @@ page_views <-
 ggplot(page_views) +
   geom_point(aes(x=date, y=Total_Page_Views_Total)) +
   geom_line(aes(x=date, y=Total_Page_Views_Total)) +
-  ggtitle("Total Page Views Total") +
+  ggtitle("Page Views Total") +
   ylab("page views")
 ```
 
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 total_followers <-
   linkedind %>% 
   select(date, followers)
   
 ggplot(total_followers) +
-  geom_point(aes(x=date, y=followers)) +
-  geom_line(aes(x=date, y=followers)) +
+  geom_point(aes(x=date, y=followers, col= "blue")) +
+  geom_line(aes(x=date, y=followers, col= "red")) +
   ggtitle("total followers") +
   ylab("followers")
 
@@ -366,7 +383,7 @@ ggplot(total_followers) +
 
 
 
-
+```
 
 
 
