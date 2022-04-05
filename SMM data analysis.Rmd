@@ -266,8 +266,8 @@ total_views <-
   select(Date, Views)
   
 ggplot(total_views) +
-  geom_line(aes(x=Date, y=Views)) +
-  geom_point(aes(x=Date, y=Views)) +
+  geom_line(aes(x=Date, y=Views, color="red")) +
+  geom_point(aes(x=Date, y=Views, color= "blue")) +
   ggtitle("Views") +
   ylab("total Views") 
 ```
@@ -278,8 +278,8 @@ total_Subscribers <-
   select(Date, Subscribers)
 
 ggplot(total_Subscribers) +
-  geom_line(aes(x=Date, y=Subscribers)) +
-  geom_point(aes(x=Date, y=Subscribers)) +
+  geom_line(aes(x=Date, y=Subscribers,color="red")) +
+  geom_point(aes(x=Date, y=Subscribers, color= "blue")) +
   ggtitle("Subscribers") +
   ylab("total_Subscribers")
 ```
@@ -290,8 +290,8 @@ total_likes <-
   select(Date, likes)
   
 ggplot(total_likes) +
-  geom_line(aes(x=Date, y=likes)) +
-  geom_point(aes(x=Date, y=likes)) +
+  geom_line(aes(x=Date, y=likes, color="red")) +
+  geom_point(aes(x=Date, y=likes, color= "blue")) +
   ggtitle("likes") +
   ylab("total likes")
 
@@ -303,8 +303,8 @@ total_impressions <-
   select(Date, impressions)
   
 ggplot(total_impressions) +
-  geom_line(aes(x=Date, y=impressions)) +
-  geom_point(aes(x=Date, y=impressions)) +
+  geom_line(aes(x=Date, y=impressions, color="red")) +
+  geom_point(aes(x=Date, y=impressions, color= "blue")) +
   ggtitle("impresions") +
   ylab("total impresions")
 
@@ -318,8 +318,8 @@ total_shares <-
   
 
 ggplot(total_shares) +
-  geom_line(aes(x=Date, y=shares)) +
-  geom_point(aes(x=Date, y=shares)) +
+  geom_line(aes(x=Date, y=shares, color="red")) +
+  geom_point(aes(x=Date, y=shares, color= "blue")) +
   ggtitle("shares") +
   ylab("total shares")
 ```
@@ -332,8 +332,8 @@ total_view <-
   select(date, Overall_page_views_total)
 
 ggplot(total_view) +
-  geom_point(aes(x=date, y=Overall_page_views_total)) +
-  geom_line(aes(x=date, y=Overall_page_views_total)) +
+  geom_point(aes(x=date, y=Overall_page_views_total, color= "blue")) +
+  geom_line(aes(x=date, y=Overall_page_views_total, color="red")) +
   ggtitle("Overal page views total") +
   ylab("total view")
 ```
@@ -343,8 +343,8 @@ total_visitors <-
   linkedind %>% 
   select(date, Overall_page_unique_visitors_total) 
 ggplot(total_visitors) +
-  geom_point(aes(x=date, y=Overall_page_unique_visitors_total))+
-  geom_line(aes(x=date, y=Overall_page_unique_visitors_total)) +
+  geom_point(aes(x=date, y=Overall_page_unique_visitors_total, color= "blue"))+
+  geom_line(aes(x=date, y=Overall_page_unique_visitors_total, color="red")) +
   ggtitle("Overall page unique visitors total") +
   ylab("total visitors")
 
@@ -358,8 +358,8 @@ page_views <-
   select(date, Total_Page_Views_Total)
   
 ggplot(page_views) +
-  geom_point(aes(x=date, y=Total_Page_Views_Total)) +
-  geom_line(aes(x=date, y=Total_Page_Views_Total)) +
+  geom_point(aes(x=date, y=Total_Page_Views_Total,color= "blue")) +
+  geom_line(aes(x=date, y=Total_Page_Views_Total, color= "red")) +
   ggtitle("Page Views Total") +
   ylab("page views")
 ```
@@ -372,8 +372,8 @@ total_followers <-
   select(date, followers)
   
 ggplot(total_followers) +
-  geom_point(aes(x=date, y=followers, col= "blue")) +
-  geom_line(aes(x=date, y=followers, col= "red")) +
+  geom_point(aes(x=date, y=followers, color= "blue")) +
+  geom_line(aes(x=date, y=followers,color= "red" )) +
   ggtitle("total followers") +
   ylab("followers")
 
