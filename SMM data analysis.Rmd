@@ -12,7 +12,7 @@ editor_options:
 ---
 Manizales 16 de marzo de 2022
 
-Referencia: Informe  del 23 al 30 de marzo
+Referencia: Informe  6 de Abril
 
 
 ```{r echo=, message=FALSE, warning=FALSE}
@@ -322,6 +322,32 @@ ggplot(total_shares) +
   geom_point(aes(x=Date, y=shares, color= "blue")) +
   ggtitle("shares") +
   ylab("total shares")
+```
+
+```{r}
+total_dislikes <-
+  youtube %>% 
+  select(Date, dislikes) 
+
+ggplot(total_dislikes) +
+  geom_line(aes(x=Date, y= dislikes, color="red")) +
+  geom_point(aes(x=Date, y= dislikes, color="blue")) +
+  ggtitle("dislikes") +
+  ylab("total dislikes")
+  
+```
+
+```{r}
+total_comments_added <-
+  youtube %>% 
+  select(Date, comments_added)
+
+
+ggplot(total_comments_added) +
+  geom_line(aes(x=Date, y=comments_added, color="red")) +
+  geom_point(aes(x=Date, y=comments_added, color="blue")) +
+  ggtitle("comments added") +
+  ylab("total comments added")
 ```
 
 # linkedind
