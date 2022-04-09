@@ -350,11 +350,11 @@ ggplot(total_comments_added) +
   ylab("total comments added")
 ```
 
-# linkedind
+# linkedin
 
 ```{r message=FALSE, warning=FALSE}
 total_view <-
-  linkedind %>% 
+  linkedind %>%  
   select(date, Overall_page_views_total)
 
 ggplot(total_view) +
@@ -366,7 +366,7 @@ ggplot(total_view) +
 
 ```{r message=FALSE, warning=FALSE}
 total_visitors <-
-  linkedind %>% 
+  linkedin %>% 
   select(date, Overall_page_unique_visitors_total) 
 ggplot(total_visitors) +
   geom_point(aes(x=date, y=Overall_page_unique_visitors_total, color= "blue"))+
@@ -380,7 +380,7 @@ ggplot(total_visitors) +
 
 ```{r message=FALSE, warning=FALSE}
 page_views <-
-  linkedind %>% 
+  linkedin %>% 
   select(date, Total_Page_Views_Total)
   
 ggplot(page_views) +
@@ -394,7 +394,7 @@ ggplot(page_views) +
 
 ```{r message=FALSE, warning=FALSE}
 total_followers <-
-  linkedind %>% 
+  linkedin %>% 
   select(date, followers)
   
 ggplot(total_followers) +
@@ -403,6 +403,21 @@ ggplot(total_followers) +
   ggtitle("total followers") +
   ylab("followers")
 
+```
+
+```{r}
+total_impressions <-
+  linkedind %>% 
+  select(date, impressions)
+```
+
+```{r}
+ggplot(total_impressions) +
+  geom_line(aes(x= date, y= impressions, color="red")) +
+  geom_point(aes(x= date, y= impressions, color="blue")) +
+  ggtitle("total impressions") +
+  ylab("impressions")
+  
 ```
 
 
