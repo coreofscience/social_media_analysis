@@ -12,7 +12,7 @@ editor_options:
 ---
 Manizales 16 de marzo de 2022
 
-Referencia: Informe  6 de Abril
+Referencia: Informe  13 de Abril
 
 
 ```{r echo=, message=FALSE, warning=FALSE}
@@ -366,7 +366,7 @@ ggplot(total_view) +
 
 ```{r message=FALSE, warning=FALSE}
 total_visitors <-
-  linkedin %>% 
+  linkedind %>% 
   select(date, Overall_page_unique_visitors_total) 
 ggplot(total_visitors) +
   geom_point(aes(x=date, y=Overall_page_unique_visitors_total, color= "blue"))+
@@ -380,7 +380,7 @@ ggplot(total_visitors) +
 
 ```{r message=FALSE, warning=FALSE}
 page_views <-
-  linkedin %>% 
+  linkedind %>% 
   select(date, Total_Page_Views_Total)
   
 ggplot(page_views) +
@@ -394,7 +394,7 @@ ggplot(page_views) +
 
 ```{r message=FALSE, warning=FALSE}
 total_followers <-
-  linkedin %>% 
+  linkedind %>% 
   select(date, followers)
   
 ggplot(total_followers) +
